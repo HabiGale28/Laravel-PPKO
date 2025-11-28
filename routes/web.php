@@ -1,48 +1,81 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\BeritaController; // <-- IMPORT BERITA CONTROLLER
-use App\Http\Controllers\Admin\DashboardController; // <-- IMPORT DASHBOARD CONTROLLER (akan kita buat)
 
-// Halaman Landing Page (index.php lama Anda)
-Route::get('/', function () {
-    return view('welcome'); // Ini adalah 'welcome.blade.php'
-});
+// Import semua Controller yang kita butuhkan
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\BeritaController;
+use App\Http\Controllers\Admin\DestinasiController;
+use Illuminate\Support\Facades\DB; // <-- PASTIKAN INI ADA
+use App\Http\Controllers\PublicWisataController;
+use App\Http\Controllers\PublicKebudayaanController;
+use App\Http\Controllers\PublicGaleriController;
+use App\Http\Controllers\Admin\AlbumController;
+use App\Http\Controllers\PublicInformasiController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+// Rute Halaman Utama (Homepage)
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Rute Halaman Profil Desa
+Route::get('/profil-desa', function () {
+    return view('profil-desa');
+})->name('profil.desa');
+
 
 // --- GRUP ROUTE ADMIN ---
-// Semua route di dalam grup ini:
-// 1. Hanya bisa diakses oleh user yang sudah login (middleware('auth'))
-// 2. Punya awalan URL /admin (prefix('admin'))
-// 3. Punya nama route 'admin.' (name('admin.'))
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    
+    // --- ROUTE UNTUK DASHBOARD ---
+    Route::get('/dashboard', function () {
+        
+        // Gunakan 'destinasi' (TANPA 's')
+        $total_destinasi = DB::table('destinasi')->count();
+        
+        // --- PERBAIKAN: Gunakan 'beritas' (DENGAN 's') ---
+        $total_berita = DB::table('beritas')->count();
+        
+        return view('admin.dashboard', [
+            'total_destinasi' => $total_destinasi,
+            'total_berita' => $total_berita,
+        ]);
+    })->name('dashboard');
+    // ---------------------------------
 
-    // Route untuk Dashboard Admin (akan kita buat)
-    // URL: /admin/dashboard
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Route untuk CRUD Berita
-    // Ini otomatis membuat URL:
-    // - /admin/berita (index)
-    // - /admin/berita/create (create)
-    // - /admin/berita (store)
-    // - /admin/berita/{berita} (show)
-    // - /admin/berita/{berita}/edit (edit)
-    // - /admin/berita/{berita} (update)
-    // - /admin/berita/{berita} (destroy)
     Route::resource('berita', BeritaController::class);
+    Route::resource('destinasi', DestinasiController::class);
+    Route::resource('sliders', \App\Http\Controllers\Admin\SliderController::class);
+    Route::resource('kebudayaan', \App\Http\Controllers\Admin\KebudayaanController::class);
+    Route::resource('galeri', AlbumController::class);
+    Route::post('galeri/{id}/upload', [AlbumController::class, 'uploadFoto'])->name('galeri.upload');
+    Route::delete('galeri/foto/{id}', [AlbumController::class, 'deleteFoto'])->name('galeri.foto.delete');
 
-    // Nanti Anda bisa tambahkan ini untuk destinasi:
-    // Route::resource('destinasi', DestinasiController::class);
 });
 // ------------------------
 
+Route::get('/wisata', [PublicWisataController::class, 'index'])->name('wisata.index');
+Route::get('/wisata/{slug}', [PublicWisataController::class, 'show'])->name('wisata.show');
+Route::get('/kebudayaan', [PublicKebudayaanController::class, 'index'])->name('kebudayaan.index');
+Route::get('/galeri', [PublicGaleriController::class, 'index'])->name('galeri.index');
+Route::get('/galeri/{slug}', [PublicGaleriController::class, 'show'])->name('galeri.show');
+Route::get('/informasi', [PublicInformasiController::class, 'index'])->name('informasi.index');
+Route::get('/informasi/berita/{slug}', [PublicInformasiController::class, 'showBerita'])->name('informasi.berita.show');
+Route::get('/informasi/pengumuman/{slug}', [PublicInformasiController::class, 'showPengumuman'])->name('informasi.pengumuman.show');
 
-// Route untuk Profile (Bawaan Breeze, biarkan saja)
+// Rute Profil Bawaan Breeze (Biarkan saja)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php'; // Ini adalah route login, register, logout
+
+// --- INI BAGIAN PENTING UNTUK LOGIN ---
+require __DIR__.'/auth.php';
+// ------------------------------------

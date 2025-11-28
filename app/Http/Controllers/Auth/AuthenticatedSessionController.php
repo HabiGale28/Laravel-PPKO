@@ -28,7 +28,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended('/admin/berita');
+        // --- INI PERUBAHANNYA ---
+        // Mengarahkan ke admin destinasi, bukan 'dashboard'
+        return redirect()->intended(route('admin.dashboard'));
+        // ------------------------
     }
 
     /**

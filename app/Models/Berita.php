@@ -3,12 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Berita extends Model
 {
-    public function author(): BelongsTo
+    // PERBAIKAN: Sesuaikan dengan nama tabel di database (jamak)
+    protected $table = 'beritas'; 
+    
+    protected $guarded = [];
+
+    public function kategori()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        // Asumsi nama tabel kategori Anda 'kategori_berita' atau 'kategori_beritas'
+        // Sesuaikan foreign key jika perlu, defaultnya 'kategori_berita_id'
+        return $this->belongsTo(KategoriBerita::class, 'kategori_id');
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
