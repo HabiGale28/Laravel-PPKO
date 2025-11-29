@@ -657,7 +657,7 @@
                 document.querySelector('.page-counter').innerHTML = `<span class="current">01</span> / 01`;
                 document.querySelector('.hero-title').textContent = "Selamat Datang";
                 document.querySelector('.location-tag').textContent = "Kampung Wisata";
-                document.querySelector('.hero').style.backgroundImage = `url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920')`;
+                document.querySelector('.hero').style.backgroundImage = `url('https://mediakaltim.com/wp-content/uploads/2024/09/WhatsApp-Image-2024-09-24-at-21.35.11.jpeg?w=1920')`;
                 return;
             }
 
