@@ -5,112 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeri - Wonderful Indonesia</title>
     <style>
-        /* === 1. COPY STYLE GLOBAL (Sama dengan Beranda) === */
+        /* === 1. COPY STYLE GLOBAL === */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; color: #333; overflow-x: hidden; }
 
         /* Header Styling */
         .header {
-            position: fixed;
-            top: 0; width: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            position: fixed; top: 0; width: 100%;
+            background: rgba(0, 0, 0, 0.7); 
             backdrop-filter: blur(10px);
-            padding: 20px 40px;
-            z-index: 1000;
-            transition: all 0.3s;
+            padding: 15px 5%; z-index: 1000; transition: all 0.3s;
         }
         .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
-        .logo h1 { font-size: 24px; font-weight: 300; color: white; }
+        .logo h1 { font-size: clamp(20px, 4vw, 24px); font-weight: 300; color: white; margin: 0; }
         .logo .wonderful { color: #00bcd4; font-weight: 700; }
-        .nav-menu { display: flex; list-style: none; gap: 30px; align-items: center; }
-        .nav-menu a { color: white; text-decoration: none; transition: color 0.3s; font-size: 14px; }
+        
+        .nav-menu { display: flex; list-style: none; gap: 25px; align-items: center; margin: 0; padding: 0; }
+        .nav-menu a { color: white; text-decoration: none; transition: color 0.3s; font-size: 14px; font-weight: 500; }
         .nav-menu a:hover { color: #00bcd4; }
 
-        .admin-login-btn {
-            padding: 8px 20px; background: linear-gradient(135deg, #009688 0%, #00bcd4 100%);
-            color: white; border: none; border-radius: 20px; cursor: pointer;
-            font-weight: 600; transition: all 0.3s; font-size: 13px; text-decoration: none;
-        }
-        .admin-login-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 188, 212, 0.5); }
+        /* Hamburger Menu */
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+        .menu-toggle span { width: 30px; height: 3px; background-color: white; border-radius: 5px; transition: all 0.3s; }
 
-        /* === 2. STYLE KHUSUS HALAMAN GALERI === */
-
-        /* Banner */
+        /* === 2. STYLE KHUSUS GALERI === */
         .page-banner {
             height: 50vh;
+            min-height: 300px;
             background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-bottom: 50px;
+            background-size: cover; background-position: center;
+            position: relative; display: flex; align-items: center; justify-content: center;
+            text-align: center; margin-bottom: 50px; margin-top: 0;
         }
         .page-banner::before { 
             content:''; position:absolute; inset:0; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
         }
-        .banner-content { position: relative; z-index: 2; color: white; }
-        .banner-content h1 { font-size: 48px; font-weight: 700; margin-bottom: 10px; }
-        .banner-content p { font-size: 18px; opacity: 0.9; }
+        .banner-content { position: relative; z-index: 2; color: white; padding: 0 20px; }
+        .banner-content h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 700; margin-bottom: 10px; }
+        .banner-content p { font-size: clamp(16px, 3vw, 18px); opacity: 0.9; }
 
         /* Container */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 5% 80px; }
 
-        /* Album Grid */
+        /* Album Grid - PERBAIKAN DISINI (3 Kolom) */
         .album-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            /* Memaksa 3 kolom, jika layar kecil jadi 1 */
+            grid-template-columns: repeat(3, 1fr); 
             gap: 30px;
         }
 
         /* Album Card */
         .album-card {
-            background: #fff;
+            position: relative;
+            height: 300px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s;
+            cursor: pointer;
             border: 1px solid #eee;
-            position: relative;
         }
-        .album-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .album-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
         
         .album-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s;
         }
+        .album-card:hover img { transform: scale(1.05); }
 
-        .album-content {
-            padding: 20px;
-            text-align: center;
-        }
-        .album-content h3 { font-size: 20px; color: #333; margin-bottom: 5px; }
-        .album-content p { font-size: 14px; color: #777; margin-bottom: 15px; }
-
-        .btn-lihat {
-            display: inline-block;
-            background: #00bcd4;
+        /* Overlay Content */
+        .album-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 25px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
             color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 14px;
-            transition: background 0.3s;
+            z-index: 2;
         }
-        .btn-lihat:hover { background: #008ba3; }
 
-        /* Pagination Styling */
-        .pagination-wrapper { margin-top: 40px; display: flex; justify-content: center; }
-        
+        .album-count {
+            display: inline-block;
+            background: rgba(0, 188, 212, 0.8);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .album-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .btn-lihat-overlay {
+            display: inline-block;
+            font-size: 13px;
+            color: #ddd;
+            text-decoration: none;
+            margin-top: 5px;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+        .btn-lihat-overlay:hover { color: #00bcd4; border-color: #00bcd4; }
+
+        /* Pagination & Responsive */
+        .pagination-wrapper { margin-top: 50px; display: flex; justify-content: center; }
+        .pagination-wrapper svg { width: 20px !important; height: 20px !important; }
+
         @media (max-width: 992px) { .album-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { 
-            .album-grid { grid-template-columns: 1fr; } 
-            .banner-content h1 { font-size: 36px; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .nav-menu {
+                position: fixed; top: 0; right: -100%;
+                height: 100vh; width: 75%;
+                background: rgba(13, 26, 44, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column; justify-content: center;
+                transition: 0.4s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+            .nav-menu.active { right: 0; }
+            .nav-menu li { margin: 15px 0; }
+            .nav-menu a { font-size: 18px; }
+
+            .album-grid { grid-template-columns: 1fr; } /* 1 Kolom di HP */
+            .page-banner { height: 40vh; }
         }
     </style>
 </head>
@@ -119,24 +141,22 @@
     <header class="header">
         <div class="nav-container">
             <div class="logo">
-                <h1><span class="wonderful">wonderful</span> indonesia</h1>
+                <h1><span class="wonderful">Kampung Terapung</span> Tihi - Tihi</h1>
             </div>
+            
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+
             <nav>
-                <ul class="nav-menu">
+                <ul class="nav-menu" id="navMenu">
                     <li><a href="<?php echo e(route('home')); ?>">🏠 Beranda</a></li>
                     <li><a href="<?php echo e(route('profil.desa')); ?>">👤 Profil</a></li>
                     <li><a href="<?php echo e(route('wisata.index')); ?>">🏝️ Wisata</a></li>
                     <li><a href="<?php echo e(route('kebudayaan.index')); ?>">🎭 Kebudayaan</a></li>
-                    <li><a href="#">📰 Berita</a></li> 
-                    <li><a href="#informasi">ℹ️ Informasi</a></li>
+                    <li><a href="<?php echo e(route('informasi.index')); ?>">ℹ️ Informasi</a></li>
                     <li><a href="<?php echo e(route('galeri.index')); ?>" style="color: #00bcd4;">📸 Galeri</a></li>
-                    <li><a href="#kontak">📞 Kontak</a></li>
-            
-                    <?php if(auth()->guard()->check()): ?>
-                        <li><a href="<?php echo e(route('admin.dashboard')); ?>" class="admin-login-btn">Panel Admin</a></li>
-                    <?php else: ?>
-                        <li><a href="<?php echo e(route('login')); ?>" class="admin-login-btn">🔐 Admin</a></li>
-                    <?php endif; ?>
+                    <li><a href="<?php echo e(route('kontak')); ?>">📞 Kontak</a></li>
                 </ul>
             </nav>
         </div>
@@ -150,30 +170,82 @@
     </div>
 
     <div class="container">
-        <?php if($albums->count() > 0): ?>
-            <div class="album-grid">
-                <?php $__currentLoopData = $albums; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $album): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        
+        <div class="album-grid">
+            
+            <?php $__empty_1 = true; $__currentLoopData = $albums ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $album): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <div class="album-card">
                     <img src="<?php echo e(asset('uploads/albums/'.$album->cover_album)); ?>" alt="<?php echo e($album->nama_album); ?>">
-                    <div class="album-content">
-                        <h3><?php echo e($album->nama_album); ?></h3>
-                        <p><?php echo e($album->fotos_count); ?> Foto</p>
-                        <a href="<?php echo e(route('galeri.show', $album->slug)); ?>" class="btn-lihat">Lihat Album</a>
+                    <div class="album-overlay">
+                        <span class="album-count">📸 <?php echo e($album->fotos_count ?? 0); ?> Foto</span>
+                        <div class="album-title"><?php echo e($album->nama_album); ?></div>
+                        <a href="<?php echo e(route('galeri.show', $album->slug)); ?>" class="btn-lihat-overlay">Lihat Album &rarr;</a>
                     </div>
                 </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-            
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                
+                <div class="album-card">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a42a463658?w=800" alt="Snorkeling">
+                    <div class="album-overlay">
+                        <span class="album-count">📸 12 Foto</span>
+                        <div class="album-title">Keindahan Bawah Laut</div>
+                        <a href="#" class="btn-lihat-overlay">Lihat Album &rarr;</a>
+                    </div>
+                </div>
+                <div class="album-card">
+                    <img src="https://images.unsplash.com/photo-1569383746724-6f1b882b8f46?w=800" alt="Nelayan">
+                    <div class="album-overlay">
+                        <span class="album-count">📸 8 Foto</span>
+                        <div class="album-title">Aktivitas Nelayan</div>
+                        <a href="#" class="btn-lihat-overlay">Lihat Album &rarr;</a>
+                    </div>
+                </div>
+                <div class="album-card">
+                    <img src="https://images.unsplash.com/photo-1596401057633-565652ca65a0?w=800" alt="Festival">
+                    <div class="album-overlay">
+                        <span class="album-count">📸 24 Foto</span>
+                        <div class="album-title">Festival Adat 2024</div>
+                        <a href="#" class="btn-lihat-overlay">Lihat Album &rarr;</a>
+                    </div>
+                </div>
+
+            <?php endif; ?>
+
+        </div> <?php if(isset($albums) && method_exists($albums, 'links')): ?>
             <div class="pagination-wrapper">
                 <?php echo e($albums->links()); ?>
 
             </div>
-        <?php else: ?>
-            <div style="text-align: center; padding: 50px; color: #666;">
-                <h3>Belum ada album galeri.</h3>
-            </div>
         <?php endif; ?>
     </div>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('navMenu');
+            const toggle = document.querySelector('.menu-toggle');
+            nav.classList.toggle('active');
+            
+            const spans = toggle.querySelectorAll('span');
+            if(nav.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        }
+        
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.7)';
+            }
+        });
+    </script>
 
 </body>
 </html><?php /**PATH C:\xampp\htdocs\wonderful-indonesia-laravel\resources\views/galeri/index.blade.php ENDPATH**/ ?>

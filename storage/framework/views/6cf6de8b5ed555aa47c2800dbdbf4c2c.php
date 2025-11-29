@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <title>{{ $pengumuman->judul }}</title>
+    <title><?php echo e($pengumuman->judul); ?></title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f6; color: #333; }
         
@@ -26,12 +26,12 @@
             <div class="logo"><h1><span class="wonderful">wonderful</span> indonesia</h1></div>
             <nav>
                 <ul class="nav-menu">
-                    <li><a href="{{ route('home') }}">🏠 Beranda</a></li>
-                    <li><a href="{{ route('profil.desa') }}">👤 Profil</a></li>
-                    <li><a href="{{ route('wisata.index') }}">🏝️ Wisata</a></li>
-                    <li><a href="{{ route('kebudayaan.index') }}">🎭 Kebudayaan</a></li>
-                    <li><a href="{{ route('informasi.index') }}" style="color: #00bcd4;">ℹ️ Informasi</a></li>
-                    <li><a href="{{ route('galeri.index') }}">📸 Galeri</a></li>
+                    <li><a href="<?php echo e(route('home')); ?>">🏠 Beranda</a></li>
+                    <li><a href="<?php echo e(route('profil.desa')); ?>">👤 Profil</a></li>
+                    <li><a href="<?php echo e(route('wisata.index')); ?>">🏝️ Wisata</a></li>
+                    <li><a href="<?php echo e(route('kebudayaan.index')); ?>">🎭 Kebudayaan</a></li>
+                    <li><a href="<?php echo e(route('informasi.index')); ?>" style="color: #00bcd4;">ℹ️ Informasi</a></li>
+                    <li><a href="<?php echo e(route('galeri.index')); ?>">📸 Galeri</a></li>
                     <li><a href="#kontak">📞 Kontak</a></li>
                 </ul>
             </nav>
@@ -39,16 +39,17 @@
     </header>
 
     <div class="container">
-        <h1 class="p-title">{{ $pengumuman->judul }}</h1>
-        <div class="p-date">📅 {{ \Carbon\Carbon::parse($pengumuman->tanggal_publish)->format('d F Y') }}</div>
+        <h1 class="p-title"><?php echo e($pengumuman->judul); ?></h1>
+        <div class="p-date">📅 <?php echo e(\Carbon\Carbon::parse($pengumuman->tanggal_publish)->format('d F Y')); ?></div>
         
-        @if($pengumuman->gambar)
-            <img src="{{ asset('uploads/pengumuman/'.$pengumuman->gambar) }}" style="width: 100%; border-radius: 8px; margin-bottom: 30px;">
-        @endif
+        <?php if($pengumuman->gambar): ?>
+            <img src="<?php echo e(asset('uploads/pengumuman/'.$pengumuman->gambar)); ?>" style="width: 100%; border-radius: 8px; margin-bottom: 30px;">
+        <?php endif; ?>
 
         <div class="p-content">
-            {!! nl2br(e($pengumuman->konten)) !!}
+            <?php echo nl2br(e($pengumuman->konten)); ?>
+
         </div>
     </div>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\wonderful-indonesia-laravel\resources\views/informasi/detail_pengumuman.blade.php ENDPATH**/ ?>

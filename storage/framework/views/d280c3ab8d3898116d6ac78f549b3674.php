@@ -17,6 +17,7 @@
         
         <div style="display: grid; grid-template-columns: 300px 1fr; gap: 30px;">
             
+            <!-- KOLOM KIRI: UPLOAD GAMBAR -->
             <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); height: fit-content;">
                 <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px; color: #555;">Upload Gambar</h3>
                 
@@ -37,6 +38,7 @@
                 <button type="submit" class="btn btn-add" style="width: 100%; margin-top: 10px; padding: 12px;">Simpan Data</button>
             </div>
 
+            <!-- KOLOM KANAN: FORM DATA -->
             <div style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                 
                 <div class="form-group" style="margin-bottom: 20px;">
@@ -54,6 +56,7 @@
                             <option value="Budaya">Budaya</option>
                             <option value="Religi">Religi</option>
                             <option value="Kuliner">Kuliner</option>
+                            <option value="Kuliner">Sumber Daya</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -75,21 +78,6 @@
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label style="font-weight: 600;">Konten Lengkap (Artikel)</label>
                     <textarea name="konten" rows="10" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"><?php echo e(old('konten')); ?></textarea>
-                </div>
-
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-                    <div>
-                        <label style="font-size: 12px;">Jml. Wisata</label>
-                        <input type="number" name="wisata" value="0" style="width: 100%; padding: 5px; border: 1px solid #ddd;">
-                    </div>
-                    <div>
-                        <label style="font-size: 12px;">Jml. Kebudayaan</label>
-                        <input type="number" name="kebudayaan" value="0" style="width: 100%; padding: 5px; border: 1px solid #ddd;">
-                    </div>
-                    <div>
-                        <label style="font-size: 12px;">Jml. Event</label>
-                        <input type="number" name="event" value="0" style="width: 100%; padding: 5px; border: 1px solid #ddd;">
-                    </div>
                 </div>
 
             </div>

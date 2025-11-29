@@ -228,18 +228,18 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" style="opacity: 0.7;">
-                                🏷️ Kategori (Soon)
+                            <a href="{{ route('admin.kategori.index') }}">
+                                🏷️ Kategori Berita
                             </a>
                         </li>
                         <li>
-                            <a href="#" style="opacity: 0.7;">
-                                📢 Pengumuman (Soon)
+                            <a href="{{ route('admin.pengumuman.index') }}">
+                                📢 Pengumuman
                             </a>
                         </li>
                         <li>
-                            <a href="#" style="opacity: 0.7;">
-                                📅 Event (Soon)
+                            <a href="{{ route('admin.event.index') }}">
+                                📅 Event
                             </a>
                         </li>
                     </ul>

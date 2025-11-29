@@ -28,6 +28,9 @@ Route::get('/profil-desa', function () {
     return view('profil-desa');
 })->name('profil.desa');
 
+Route::get('/kontak', function () {
+    return view('kontak');
+})->name('kontak');
 
 // --- GRUP ROUTE ADMIN ---
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
@@ -55,6 +58,16 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('galeri', AlbumController::class);
     Route::post('galeri/{id}/upload', [AlbumController::class, 'uploadFoto'])->name('galeri.upload');
     Route::delete('galeri/foto/{id}', [AlbumController::class, 'deleteFoto'])->name('galeri.foto.delete');
+    
+    // Route Kategori Berita
+    Route::resource('kategori', \App\Http\Controllers\Admin\KategoriBeritaController::class);
+
+    // Route Pengumuman
+    Route::resource('pengumuman', \App\Http\Controllers\Admin\PengumumanController::class);
+
+    // Route Event
+    Route::resource('event', \App\Http\Controllers\Admin\EventController::class);
+
 
 });
 // ------------------------
@@ -67,6 +80,7 @@ Route::get('/galeri/{slug}', [PublicGaleriController::class, 'show'])->name('gal
 Route::get('/informasi', [PublicInformasiController::class, 'index'])->name('informasi.index');
 Route::get('/informasi/berita/{slug}', [PublicInformasiController::class, 'showBerita'])->name('informasi.berita.show');
 Route::get('/informasi/pengumuman/{slug}', [PublicInformasiController::class, 'showPengumuman'])->name('informasi.pengumuman.show');
+Route::get('/informasi/event/{slug}', [PublicInformasiController::class, 'showEvent'])->name('informasi.event.show');
 
 // Rute Profil Bawaan Breeze (Biarkan saja)
 Route::middleware('auth')->group(function () {

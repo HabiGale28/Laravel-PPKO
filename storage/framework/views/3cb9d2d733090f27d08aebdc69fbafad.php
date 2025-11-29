@@ -19,6 +19,7 @@
         
         <div style="display: grid; grid-template-columns: 300px 1fr; gap: 30px;">
             
+            <!-- KOLOM KIRI -->
             <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); height: fit-content;">
                 <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px; color: #555;">Gambar Utama</h3>
                 
@@ -46,6 +47,7 @@
                 <button type="submit" class="btn btn-add" style="width: 100%; margin-top: 10px; padding: 12px;">Update Data</button>
             </div>
 
+            <!-- KOLOM KANAN -->
             <div style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                 
                 <div class="form-group" style="margin-bottom: 20px;">
@@ -86,7 +88,7 @@
                     <textarea name="konten" rows="10" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"><?php echo e(old('konten', $destinasi->konten)); ?></textarea>
                 </div>
 
-                </div>
+            </div>
         </div>
     </form>
  <?php echo $__env->renderComponent(); ?>

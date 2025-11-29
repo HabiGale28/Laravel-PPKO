@@ -229,18 +229,18 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" style="opacity: 0.7;">
-                                🏷️ Kategori (Soon)
+                            <a href="<?php echo e(route('admin.kategori.index')); ?>">
+                                🏷️ Kategori Berita
                             </a>
                         </li>
                         <li>
-                            <a href="#" style="opacity: 0.7;">
-                                📢 Pengumuman (Soon)
+                            <a href="<?php echo e(route('admin.pengumuman.index')); ?>">
+                                📢 Pengumuman
                             </a>
                         </li>
                         <li>
-                            <a href="#" style="opacity: 0.7;">
-                                📅 Event (Soon)
+                            <a href="<?php echo e(route('admin.event.index')); ?>">
+                                📅 Event
                             </a>
                         </li>
                     </ul>

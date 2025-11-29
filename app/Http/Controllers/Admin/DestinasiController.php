@@ -37,8 +37,6 @@ class DestinasiController extends Controller
             'tipe_pariwisata' => 'nullable|string|max:255',
             'deskripsi_singkat' => 'nullable|string',
             'konten' => 'nullable|string',
-            'latitude' => 'nullable|string|max:100',
-            'longitude' => 'nullable|string|max:100',
         ]);
 
         $namaGambar = null;
@@ -61,8 +59,6 @@ class DestinasiController extends Controller
             'tipe_pariwisata' => $validatedData['tipe_pariwisata'],
             'deskripsi_singkat' => $validatedData['deskripsi_singkat'],
             'konten' => $validatedData['konten'],
-            'latitude' => $validatedData['latitude'],
-            'longitude' => $validatedData['longitude'],
         ]);
 
         return redirect()->route('admin.destinasi.index')->with('success', 'Destinasi baru berhasil ditambahkan!');
@@ -93,8 +89,6 @@ class DestinasiController extends Controller
             'tipe_pariwisata' => 'nullable|string|max:255',
             'deskripsi_singkat' => 'nullable|string',
             'konten' => 'nullable|string',
-            'latitude' => 'nullable|string|max:100',
-            'longitude' => 'nullable|string|max:100',
         ]);
 
         $namaGambar = $destinasi->gambar_utama; 
@@ -120,8 +114,6 @@ class DestinasiController extends Controller
             'tipe_pariwisata' => $validatedData['tipe_pariwisata'],
             'deskripsi_singkat' => $validatedData['deskripsi_singkat'],
             'konten' => $validatedData['konten'],
-            'latitude' => $validatedData['latitude'],
-            'longitude' => $validatedData['longitude'],
         ]);
 
         return redirect()->route('admin.destinasi.index')->with('success', 'Destinasi berhasil diperbarui!');

@@ -47,6 +47,7 @@
                             <option value="Budaya">Budaya</option>
                             <option value="Religi">Religi</option>
                             <option value="Kuliner">Kuliner</option>
+                            <option value="Kuliner">Sumber Daya</option>
                         </select>
                     </div>
                     <div class="form-group">

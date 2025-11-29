@@ -13,7 +13,7 @@ class PublicInformasiController extends Controller
 {
     public function index(): View
     {
-        // PENGUMUMAN (Gunakan try-catch agar aman jika tabel kosong/belum ada)
+        // PENGUMUMAN
         try {
             $pengumuman = Pengumuman::where('status', 'publish')
                             ->latest('tanggal_publish')
@@ -51,7 +51,6 @@ class PublicInformasiController extends Controller
     {
         $berita = Berita::where('slug', $slug)->where('status', 'publish')->firstOrFail();
         
-        // Sidebar data
         $kategori = KategoriBerita::all();
         $recent_posts = Berita::where('status', 'publish')
                             ->where('id', '!=', $berita->id)
@@ -66,5 +65,12 @@ class PublicInformasiController extends Controller
     {
         $pengumuman = Pengumuman::where('slug', $slug)->where('status', 'publish')->firstOrFail();
         return view('informasi.detail_pengumuman', compact('pengumuman'));
+    }
+
+    // TAMBAHAN: Detail Event
+    public function showEvent($slug): View
+    {
+        $event = Event::where('slug', $slug)->where('status', 'publish')->firstOrFail();
+        return view('informasi.detail_event', compact('event'));
     }
 }
